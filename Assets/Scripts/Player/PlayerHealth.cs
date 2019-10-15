@@ -22,7 +22,6 @@ public class PlayerHealth : MonoBehaviour
     bool isDead;
     bool damaged;
 
-
     void Awake ()
     {
         anim = GetComponent <Animator> ();
@@ -63,6 +62,16 @@ public class PlayerHealth : MonoBehaviour
         }
     }
 
+    public void AddHealth(int amount) {
+		this.currentHealth += amount;
+		
+		if (currentHealth > startingHealth) {
+			currentHealth = startingHealth;
+		}
+
+		// // Set the health bar's value to the current health.
+		healthSlider.value = currentHealth;
+	}
 
     void Death ()
     {

@@ -2,13 +2,14 @@
 
 public class EnemyHealth : MonoBehaviour
 {
+    public GameObject FloatingTextPrefab;
     public int startingHealth = 100;
     public int currentHealth;
     public float sinkSpeed = 2.5f;
     public int scoreValue = 10;
     public AudioClip deathClip;
 
-
+    public GameObject AmmoLootPrefab;
     Animator anim;
     AudioSource enemyAudio;
     ParticleSystem hitParticles;
@@ -16,9 +17,18 @@ public class EnemyHealth : MonoBehaviour
     bool isDead;
     bool isSinking;
 
+    GameObject _ammoLootTracker;
     private GameObject alterEgo;
     public GameObject alterEgoPrefab;
 
+
+    public PlayerHealth playerHealth;
+    public static int deathCount;
+
+    void Start()
+    {
+        _ammoLootTracker = GameObject.FindGameObjectWithTag("AmmoLootTracker");
+    }
 
     void Awake ()
     {
@@ -26,10 +36,9 @@ public class EnemyHealth : MonoBehaviour
         enemyAudio = GetComponent <AudioSource> ();
         hitParticles = GetComponentInChildren <ParticleSystem> ();
         capsuleCollider = GetComponent <CapsuleCollider> ();
-
+        playerHealth = GetComponent<PlayerHealth>();
         currentHealth = startingHealth;
     }
-
 
     void Update ()
     {
@@ -38,7 +47,6 @@ public class EnemyHealth : MonoBehaviour
             transform.Translate (-Vector3.up * sinkSpeed * Time.deltaTime);
         }
     }
-
 
     public void TakeDamage (int amount, Vector3 hitPoint)
     {
@@ -52,10 +60,27 @@ public class EnemyHealth : MonoBehaviour
         hitParticles.transform.position = hitPoint;
         hitParticles.Play();
 
+        // Trigger floating text
+        if (FloatingTextPrefab && currentHealth > 0)
+        {
+            ShowEnemyText();
+        }
+        ShowEnemyText();
+
         if(currentHealth <= 0)
         {
             Death ();
+            deathCount++;
+           
+            // playerHealth.currentHealth += 2;
         }
+    }
+
+    void ShowEnemyText() 
+    {
+        var go = Instantiate(FloatingTextPrefab, transform.position, Quaternion.identity, transform);
+        go.GetComponent<TextMesh>().text = currentHealth.ToString();
+
     }
 
 
@@ -70,6 +95,17 @@ public class EnemyHealth : MonoBehaviour
         enemyAudio.clip = deathClip;
         enemyAudio.Play ();
 
+        for(int i = 0; i < startingHealth / 10; i++) 
+        {
+            var obj = Instantiate(AmmoLootPrefab, transform.position + new Vector3(0, Random.Range(0,2)), Quaternion.identity);
+            obj.GetComponent<Follow>().Target = _ammoLootTracker.transform;
+        }
+
+        // Debug.Log(weapon.showCurrentAmmo);
+        
+        // weapon.currentAmmo += AmmoLoot;
+        // Debug.Log(weapon.currentAmmo);
+
 
     }
 
@@ -80,7 +116,8 @@ public class EnemyHealth : MonoBehaviour
         GetComponent <Rigidbody> ().isKinematic = true;
         isSinking = true;
         ScoreManager.score += scoreValue;
-        Debug.Log("Death to " + gameObject.name);
+        KillManager.death += 1;
+        // Debug.Log("Death to " + gameObject.name);
         if (alterEgo) Destroy(alterEgo);
         Destroy (gameObject, 2f);
     }
@@ -91,11 +128,11 @@ public class EnemyHealth : MonoBehaviour
         {
             if (alterEgoPrefab == null) return; // I cannot be converted
             alterEgo = Instantiate(alterEgoPrefab, transform.position, transform.rotation);
-            alterEgo.GetComponent<EnemyHealth>().alterEgo = this.gameObject;
+            alterEgo.GetComponent<EnemyHealth>().alterEgo = gameObject;
             // Debug.Log("Created alter Ego for " + gameObject.name);
         }
         alterEgo.transform.SetPositionAndRotation(transform.position, transform.rotation);
-        this.gameObject.SetActive(false);
+        gameObject.SetActive(false);
         alterEgo.SetActive(true);
     }
 

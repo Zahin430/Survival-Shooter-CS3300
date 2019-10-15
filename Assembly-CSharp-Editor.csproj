@@ -53,6 +53,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+     <Compile Include="Assets\Easy Weapons\Editor\WeaponEditor.cs" />
      <Compile Include="Assets\Editor\TagLayerExport.cs" />
      <Compile Include="Assets\TutorialInfo\Scripts\Editor\ReadmeEditor.cs" />
  <Reference Include="Unity.TextMeshPro.Editor">

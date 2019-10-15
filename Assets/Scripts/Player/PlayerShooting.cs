@@ -17,6 +17,7 @@ public class PlayerShooting : MonoBehaviour
     Light gunLight;
     float effectsDisplayTime = 0.2f;
     bool specialWeapon = false;
+    public Weapon weapon; 
 
     void Awake ()
     {
@@ -24,6 +25,7 @@ public class PlayerShooting : MonoBehaviour
         gunParticles = GetComponent<ParticleSystem> ();
         gunLine = GetComponent <LineRenderer> ();
         gunAudio = GetComponent<AudioSource> ();
+        weapon = GetComponent<Weapon>();
         gunLight = GetComponent<Light> ();
     }
 
@@ -35,7 +37,6 @@ public class PlayerShooting : MonoBehaviour
 		if(Input.GetButton ("Fire1") && timer >= timeBetweenBullets && Time.timeScale != 0)
         {
             specialWeapon = Input.GetButton("Fire2");
-            // specialWeapon = true;
 
             Shoot ();
         }
@@ -78,7 +79,15 @@ public class PlayerShooting : MonoBehaviour
             if(enemyHealth != null)
             {
                 if (specialWeapon) enemyHealth.Convert();
-                else enemyHealth.TakeDamage (damagePerShot, shootHit.point); 
+                else 
+                {
+                    enemyHealth.TakeDamage (damagePerShot, shootHit.point);
+                    // Debug.Log(shootHit.collider.gameObject.name);
+                    if (shootHit.collider.gameObject.name == "Zombear")
+                    {
+                        Debug.Log("Its a Hellephant");
+                    }
+                } 
             }
             gunLine.SetPosition (1, shootHit.point);
         }
@@ -87,4 +96,9 @@ public class PlayerShooting : MonoBehaviour
             gunLine.SetPosition (1, shootRay.origin + shootRay.direction * range);
         }
     }
+
+    void AddAmmo(int ammo)
+    {
+        Debug.Log("Ammo is " + ammo);
+    } 
 }

@@ -3,7 +3,12 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - Zombunny
+  - Zombear
+  - Hellephant
+  - Enemy
+  - isGrounded
   layers:
   - Default
   - TransparentFX
@@ -18,7 +23,7 @@ TagManager:
   - LightMask
   - Invisible
   - PostProcessing
-  - 
+  - FirstPerson
   - 
   - 
   - 

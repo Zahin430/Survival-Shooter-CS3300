@@ -49,6 +49,21 @@ public class PlayerMovement : MonoBehaviour
         playerRigidbody.MovePosition(transform.position + movement);
     }
 
+    // void FastSpeed(float h, float v, float amount)
+    // {
+    //     // Set the movement vector based on the axis input.
+    //     movement.Set(h, 0f, v);
+
+    //     // Normalise the movement vector and make it proportional to the speed per second.
+    //     this.movement = movement.normalized * amount * Time.deltaTime;
+
+    //     // Move the player to it's current position plus the movement.
+    //     playerRigidbody.MovePosition(transform.position + movement);
+
+    //     Debug.Log(movement);
+
+    // }
+
     void Turning()
     {
         // Create a ray from the mouse cursor on screen in the direction of the camera.
