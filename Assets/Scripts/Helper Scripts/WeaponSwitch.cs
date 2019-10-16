@@ -6,10 +6,6 @@ public class WeaponSwitch : MonoBehaviour
     // Reference to the weaponSwitch
     public int selectedWeapon = 0;
 
-    public static int score;
-
-    Text text;
-
     void Start()
     {
         SelectWeapon();
@@ -70,7 +66,7 @@ public class WeaponSwitch : MonoBehaviour
     // Selects weapon from the transform child object and sets active
     void SelectWeapon()
     {
-        text = GetComponent<Text>();
+
         int i = 0;
         foreach(Transform weapon in transform)
         {
@@ -78,7 +74,7 @@ public class WeaponSwitch : MonoBehaviour
             if (i == selectedWeapon) 
             {
                 weapon.gameObject.SetActive(true);
-                text.text = "WEAPON: " + weapon.gameObject.name;
+                WeaponName.name = weapon.gameObject.name;
             } else {
                 weapon.gameObject.SetActive(false);
             }

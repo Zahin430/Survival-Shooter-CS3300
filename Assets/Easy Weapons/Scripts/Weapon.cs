@@ -22,7 +22,8 @@ public enum WeaponType
 {
 	Projectile,
 	Raycast,
-	Beam
+	Beam,
+	Default
 }
 public enum Auto
 {
@@ -60,8 +61,6 @@ public class SmartBulletHoleGroup
 		bulletHole = bh;
 	}
 }
-
-
 
 
 
@@ -553,11 +552,14 @@ public class Weapon : MonoBehaviour
 
 		// Ammo Display
 		if (showCurrentAmmo)
-		{
+		{	
 			if (type == WeaponType.Raycast || type == WeaponType.Projectile)
-				GUI.Label(new Rect(10, Screen.height - 30, 100, 20), "Ammo: " + currentAmmo);
-			else if (type == WeaponType.Beam)
-				GUI.Label(new Rect(10, Screen.height - 30, 100, 20), "Heat: " + (int)(beamHeat * 100) + "/" + (int)(maxBeamHeat * 100));
+			{
+				// Accessing Ammo to Display
+				Ammo.ammo = currentAmmo;
+				// Debug.Log(gameObject);
+			}	
+			
 		}
 	}
 

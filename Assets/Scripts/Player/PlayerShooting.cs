@@ -17,7 +17,7 @@ public class PlayerShooting : MonoBehaviour
     Light gunLight;
     float effectsDisplayTime = 0.2f;
     bool specialWeapon = false;
-    public Weapon weapon; 
+    // public Weapon weapon; 
 
     void Awake ()
     {
@@ -25,7 +25,7 @@ public class PlayerShooting : MonoBehaviour
         gunParticles = GetComponent<ParticleSystem> ();
         gunLine = GetComponent <LineRenderer> ();
         gunAudio = GetComponent<AudioSource> ();
-        weapon = GetComponent<Weapon>();
+        // weapon = GetComponent<Weapon>();
         gunLight = GetComponent<Light> ();
     }
 
@@ -96,9 +96,4 @@ public class PlayerShooting : MonoBehaviour
             gunLine.SetPosition (1, shootRay.origin + shootRay.direction * range);
         }
     }
-
-    void AddAmmo(int ammo)
-    {
-        Debug.Log("Ammo is " + ammo);
-    } 
 }

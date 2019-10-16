@@ -6,9 +6,7 @@ public class ScoreManager : MonoBehaviour
 {
     public static int score;
 
-
     Text text;
-
 
     void Awake ()
     {
@@ -20,5 +18,6 @@ public class ScoreManager : MonoBehaviour
     void Update ()
     {
         text.text = "Score: " + score;
+
     }
 }

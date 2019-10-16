@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿
 using UnityEngine.UI;
 
 using UnityEngine;
@@ -9,11 +8,8 @@ public class TimeManager : MonoBehaviour
     Text text;
     public float theTime;
     public float speed = 1;
-
     private float startTime;
-
     private bool finished = false;
-
     public PlayerHealth health;
     
     // Start is called before the first frame update
